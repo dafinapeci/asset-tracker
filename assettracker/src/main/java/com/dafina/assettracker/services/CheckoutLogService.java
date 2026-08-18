@@ -3,6 +3,7 @@ import com.dafina.assettracker.models.*;
 import com.dafina.assettracker.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,5 +47,35 @@ public class CheckoutLogService {
 
     public List<CheckoutLog> getLogsByUser(Long userId) {
         return checkoutLogRepository.findByUserId(userId);
+    }
+    public List<CheckoutLog> getAllCheckouts() {
+        return checkoutLogRepository.findAll();
+    }
+
+    @Transactional
+    public void approveCheckout(Long id) {
+        // 1. Update the log
+        CheckoutLog log = checkoutLogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Checkout not found"));
+        log.setStatus("APPROVED");
+        checkoutLogRepository.save(log);
+
+        // 2. Update the asset so no one else can borrow it
+        Asset asset = log.getAsset();
+        asset.setStatus("CHECKED_OUT");
+        assetRepository.save(asset); //
+    }
+
+    @Transactional
+    public void rejectCheckout(Long id) {
+        CheckoutLog log = checkoutLogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Checkout not found"));
+        log.setStatus("REJECTED");
+        checkoutLogRepository.save(log);
+
+        // Asset goes back to available
+        Asset asset = log.getAsset();
+        asset.setStatus("AVAILABLE");
+        assetRepository.save(asset);
     }
 }
