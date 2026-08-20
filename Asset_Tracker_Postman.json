@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "IT Asset Tracker API",
+    "description": "Complete API endpoints for the IT Asset Tracker MVP.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Get All Assets",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8080/api/assets", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "assets"] }
+      }
+    },
+    {
+      "name": "2. Create Checkout Request",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"userId\": 1,\n    \"assetId\": 1\n}"
+        },
+        "url": { "raw": "http://localhost:8080/api/checkouts", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "checkouts"] }
+      }
+    },
+    {
+      "name": "3. Get All Checkouts (Admin)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8080/api/checkouts", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "checkouts"] }
+      }
+    },
+    {
+      "name": "4. Approve Checkout",
+      "request": {
+        "method": "PUT",
+        "url": { "raw": "http://localhost:8080/api/checkouts/1/approve", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "checkouts", "1", "approve"] }
+      }
+    },
+    {
+      "name": "5. Reject Checkout",
+      "request": {
+        "method": "PUT",
+        "url": { "raw": "http://localhost:8080/api/checkouts/1/reject", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "checkouts", "1", "reject"] }
+      }
+    },
+    {
+      "name": "6. Get User History (My Items)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8080/api/checkouts/user/1", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "checkouts", "user", "1"] }
+      }
+    }
+  ]
+}
