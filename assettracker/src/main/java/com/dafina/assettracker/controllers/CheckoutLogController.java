@@ -25,7 +25,7 @@ public class CheckoutLogController {
 
     @GetMapping("/user/{userId}")
     public List<CheckoutLog> getUserCheckouts(@PathVariable Long userId) {
-        return checkoutLogService.getLogsByUser(userId);
+        return ResponseEntity.ok(checkoutLogService.getLogsByUser(userId)).getBody(); // made this functionable by returning the checkouts of users so they can see if their requests are approved or rejected
     }
 
     @GetMapping
